@@ -1,0 +1,74 @@
+name: Refresh Token
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    paths:
+      - "PUT_YOUR_REMOTES_HERE.txt"
+  workflow_dispatch:
+  schedule:
+   - cron: '0 */48 * * *'
+  watch:
+    types: [started]
+
+permissions: write-all
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_REPOSITORY: $GITHUB_REPOSITORY
+  RCLONE_CONFIG_FILE: ${{ secrets.RCLONE_CONFIG_FILE }}
+  SECRET_REMOTES: ${{ secrets.REMOTES }}
+  VAR_REMOTES: ${{ vars.REMOTES }}
+  WORKSPACE: ${{ github.WORKSPACE }}
+
+jobs:
+  Refresh_Token:
+    runs-on: ubuntu-latest
+#    timeout-minutes: 5
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@main
+
+    - name: Cache Rclone installation
+      uses: actions/cache@main
+      id: cache-rclone
+      if: ${{ always() }}
+      with:
+          path: |
+            **/rclone
+          key: cache-rclone
+          
+    - name: Install Rclone
+      if: steps.cache-rclone.outputs.cache-hit != 'true'
+      run: Scripts/Install_Rclone.sh
+
+    - name: Download rlcone.conf
+      if: ${{ env.RCLONE_CONFIG_FILE }}
+      run: |
+        rm -f rclone.conf
+        wget -O rclone.conf ${{ env.RCLONE_CONFIG_FILE }} > /dev/null 2>&1
+
+    - name: Recreate PUT_YOUR_REMOTES_HERE.txt if it is in secret
+      if: ${{ env.SECRET_REMOTES }}
+      run: |
+        rm -f PUT_YOUR_REMOTES_HERE.txt
+        if [[ "${{ env.SECRET_REMOTES }}" == "https://"* ]]; then
+          wget -O PUT_YOUR_REMOTES_HERE.txt ${{ env.SECRET_REMOTES }} > /dev/null 2>&1
+        else
+          echo "${{ env.SECRET_REMOTES }}" > PUT_YOUR_REMOTES_HERE.txt  > /dev/null 2>&1
+        fi
+
+    - name: Recreate PUT_YOUR_REMOTES_HERE.txt if it is in variable
+      if: ${{ env.VAR_REMOTES }}
+      run: |
+        rm -f PUT_YOUR_REMOTES_HERE.txt
+        if [[ "${{ env.VAR_REMOTES }}" == "https://"* ]]; then
+          wget -O PUT_YOUR_REMOTES_HERE.txt ${{ env.VAR_REMOTES }}
+        else
+          echo "${{ env.VAR_REMOTES }}" > PUT_YOUR_REMOTES_HERE.txt
+        fi
+
+    - name: Refresh Token
+      run: Scripts/Refresh_Token.sh

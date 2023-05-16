@@ -1,0 +1,100 @@
+# ✨ RCLONE AUTO REFRESH TOKEN ✨
+
+- This repo will help to check your remotes' storage / list album of GGPhotos to refresh the tokens
+- When you don't use your remote for a time, its token is expired itself
+- This repo keeps your remotes' tokens alive, not to be expired
+- Automatically run using Github Action on Cron Schedule
+    > Default: At minute 0 past every 48th hour
+
+# NOTES: 📝
+
+- The old workflows runs will be deleted after 10080 minutes _(7 days)_
+    > Run by [`Delete old workflows runs.yml`](.github/workflows/Delete%20old%20workflows%20runs.yml)
+- This repo will cache the Rclone, save up time to setup Rclone
+    > If you face any error or want to update newer Rclone version, delete the old cache `cache-rclone` in Actions tab → Management → Caches
+- I've just tested `GoogleDrive`, `OneDrive`, `Mega`, `Dropbox`, `GGPhotos`. Others I haven't tested yet.
+- Not support `Shared Google Drive` and `Combine`
+- If you face any error, create an issue and type in the full log of the failed step
+    > Don't forget to censore your personal information in the log
+
+# HOW TO USE: 📃
+
+## 1️⃣ HAVE YOUR OWN REPO
+
+- Fork this repo
+- If you want to make your repo private, then choose **Use this template** to **Create a new repository**
+
+## 2️⃣ CREATE RCLONE.CONF
+
+### OPTION 1: Edit directly
+
+> Should use only for private repo
+
+- Create a file name `rclone.conf`
+- Fill in [`rclone.conf`][rclone.conf] which you created in the previous step
+
+### OPTION 2: Use secret
+
+- Create action secret
+- **Name**: `RCLONE_CONF_FILE`<br>**Value**: Fill in the raw link of `rlcone.conf` file
+    > You can make the raw link from gist
+
+## 3️⃣ SELECT REMOTES TO REFRESH TOKENS
+
+If you don't do this step, it will automatically extract all your remotes _(Yes including combine, shared drive which may cause the job to fail)_. Skip this step if you ensure that all of your remotes are suppported by the script.
+
+<Details>
+<summary>
+
+Ex of `rclone.conf`
+</summary>
+
+```rclone.conf
+[Gugu drai] <-- Take note of this remote name
+type = drive
+scope = drive
+token = {...}
+...
+```
+
+</Details>
+
+<Details>
+<summary>
+Content format:
+</summary>
+
+```PUT_YOUR_REMOTES_HERE.txt
+Gugu drai
+1Drai
+...
+GGPhotosMain
+Oops
+```
+</Details>
+
+> **Note:** Don't keep any line break, don't keep space at the end of each line 🥴
+
+### OPTION 1: Edit directly
+
+- Create a file name `PUT_YOUR_REMOTES_HERE.txt`
+- Enter the content in the file [`PUT_YOUR_REMOTES_HERE.txt`][PUT_YOUR_REMOTES_HERE.txt] you created in the previous step
+
+### OPTION 2: Use either Secret or Variable
+
+- Create action secret/variable
+- **Name**: `REMOTES`<br>**Value**: Fill in either the content or raw link
+> If you fill in both, variable will rewrite secret
+
+# RUN:
+
+The workflows will automatically run when you do either:
+- Run itself on schedule cron, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L8)
+- Trigger from action tab
+- Star/Restar the repo ⭐
+- Edit [`PUT_YOUR_REMOTES_HERE.txt`][PUT_YOUR_REMOTES_HERE.txt]
+
+<!-- Foot Notes -->
+
+[rclone.conf]: rclone.conf
+[PUT_YOUR_REMOTES_HERE.txt]: PUT_YOUR_REMOTES_HERE.txt
