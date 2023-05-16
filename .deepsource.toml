@@ -1,11 +1,10 @@
 version = 1
 
 [[analyzers]]
-name = "shell"
+name = "test-coverage"
 
 [[analyzers]]
 name = "secrets"
 
 [[analyzers]]
-name = "test-coverage"
-enabled = false
+name = "shell"
