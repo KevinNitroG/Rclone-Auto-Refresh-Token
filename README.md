@@ -36,7 +36,7 @@
 ### OPTION 2: Use secret
 
 - Create action secret
-- **Name**: `RCLONE_CONF_FILE`<br>**Value**: Fill in the raw link of `rlcone.conf` file
+- **Name**: `RCLONE_CONFIG_FILE`<br>**Value**: Fill in the raw link of `rlcone.conf` file
     > You can make the raw link from gist
 
 ## 3️⃣ SELECT REMOTES TO REFRESH TOKENS
