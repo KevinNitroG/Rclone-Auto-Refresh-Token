@@ -89,7 +89,7 @@ Oops
 # RUN:
 
 The workflows will automatically run when you do either:
-- Run itself on schedule cron, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L8)
+- Run itself on schedule cron, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L11)
 - Trigger from action tab
 - Star/Restar the repo ⭐
 - Edit [`PUT_YOUR_REMOTES_HERE.txt`][PUT_YOUR_REMOTES_HERE.txt]
