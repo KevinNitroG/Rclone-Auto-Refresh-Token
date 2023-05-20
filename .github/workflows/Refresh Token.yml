@@ -82,8 +82,11 @@ jobs:
         # DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
         rm -rf refresh_token_log.txt
 
+        # Title for refresh_token_log.txt
+        echo "--- Log of Rclone Auto Refresh Token ---" >> refresh_token_log.txt
+
         # REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
-        exec > refresh_token_log.txt 2>&1
+        exec >> refresh_token_log.txt 2>&1
 
         Scripts/Refresh_Token.sh
 
@@ -93,6 +96,5 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: "**Log of Rclone Auto Refresh Token**"
         message_file: refresh_token_log.txt
         disable_notification: true
