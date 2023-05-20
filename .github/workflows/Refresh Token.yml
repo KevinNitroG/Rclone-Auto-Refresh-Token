@@ -93,4 +93,6 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: "**Log of Rclone Auto Refresh Token**"
         message_file: refresh_token_log.txt
+        disable_notification: true
