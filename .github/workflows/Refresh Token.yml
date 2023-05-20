@@ -84,6 +84,7 @@ jobs:
 
         # Title for refresh_token_log.txt
         echo "--- Log of Rclone Auto Refresh Token ---" >> refresh_token_log.txt
+        echo >> refresh_token_log.txt
 
         # REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
         exec >> refresh_token_log.txt 2>&1
