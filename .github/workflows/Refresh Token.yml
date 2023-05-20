@@ -73,9 +73,7 @@ jobs:
         fi
 
     - name: Refresh Token
-      run: |
-        Scripts/Refresh_Token.sh
-        exit 1
+      run: Scripts/Refresh_Token.sh
 
     - name: Refresh Token and redirect output to refresh_token_log.txt
       if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && always() }}
