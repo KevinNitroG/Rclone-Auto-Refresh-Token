@@ -21,6 +21,8 @@ env:
   SECRET_REMOTES: ${{ secrets.REMOTES }}
   VAR_REMOTES: ${{ vars.REMOTES }}
   WORKSPACE: ${{ github.WORKSPACE }}
+  TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
 jobs:
   Refresh_Token:

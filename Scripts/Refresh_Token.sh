@@ -17,7 +17,7 @@ if [ ! -s "REMOTES.txt" ]; then
     done < rclone.conf
 fi
 
-READ THE REMOTES.TXT AND RUN REFRESH TOKEN
+# READ THE REMOTES.TXT AND RUN REFRESH TOKEN
 while IFS= read -r i
 do
     echo --- "Refresh token for $i" ---
