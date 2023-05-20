@@ -73,7 +73,7 @@ jobs:
         fi
 
     - name: Refresh Token
-#      if: ${{ env.TELEGRAM_TOKEN != '' && env.TELEGRAM_TO != '' }} # Remove this hashtag if you want to exclude this step when TELEGRAM_TO and TELEGRAM_TOKEN are set. Default is always run this step.
+      if: ${{ env.TELEGRAM_TOKEN != '' && env.TELEGRAM_TO != '' }} # Remove this hashtag if you want to exclude this step when TELEGRAM_TO and TELEGRAM_TOKEN are set. Default is always run this step.
       run: Scripts/Refresh_Token.sh
 
     - name: Refresh Token and redirect output to refresh_token_log.txt

@@ -35,7 +35,14 @@ do
             ;;
         *"invalid_access_token"*)
             echo "****** !!! FAIL !!! ******"
-            echo "$i's token may be expired or revoked. Please renew the token yourself, edit rclone.conf and try again"
+            echo "$i's token may be expired or revoked."
+            echo "Please renew the token by using rclone config reconnect $i:, edit rclone.conf and try again"
+            fail=1
+            ;;
+        *"maybe token expired?"*)
+            echo "****** !!! FAIL !!! ******"
+            echo "$i's token may be expired."
+            echo "Please renew the token by using rclone config reconnect $i:, edit rclone.conf and try again"
             fail=1
             ;;
         *"didn't find section in config file")
