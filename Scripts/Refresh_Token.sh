@@ -20,7 +20,7 @@ fi
 # READ THE REMOTES.TXT AND RUN REFRESH TOKEN
 while IFS= read -r i
 do
-    echo --- "Refresh token for $i" ---
+    echo --------- "$i" ---------
     check=$(./rclone about "$i": 2>&1)
     case "$check" in
         *"otal"*)

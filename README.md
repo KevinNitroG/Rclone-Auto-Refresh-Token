@@ -84,7 +84,7 @@ Oops
 
 - Create action secret/variable
 - **Name**: `REMOTES`<br>**Value**: Fill in either the content or raw link
-> If you fill in both, variable will rewrite secret
+> If you fill in both, secret will rewrite variable
 
 ## 4️⃣ SETUP SEND LOG TO TELEGRAM _(optional)_
 
