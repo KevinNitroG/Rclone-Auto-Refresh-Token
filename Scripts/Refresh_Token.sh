@@ -1,30 +1,32 @@
 #!/bin/bash
 
-sed -i -e 's/\s*$//' -e '/^$/d' -e 's/\r//g' PUT_YOUR_REMOTES_HERE.txt
+sed -i -e 's/\s*$//' -e '/^$/d' -e 's/\r//g' REMOTES.txt
 IFS=$'\n'
 fail=0
 
-if [ ! -s "PUT_YOUR_REMOTES_HERE.txt" ]; then
+# IF REMOTES.TXT IS EMPTY, EXTRACT ALL REMOTES INTO REMOTES.TXT
+if [ ! -s "REMOTES.txt" ]; then
     while read line
     do
     # Check if line contains a string enclosed in square brackets
     if [[ $line =~ \[([^][]+)\] ]]
     then
         # Print the string enclosed in square brackets
-        echo "${BASH_REMATCH[1]}" >> PUT_YOUR_REMOTES_HERE.txt
+        echo "${BASH_REMATCH[1]}" >> REMOTES.txt
     fi
     done < rclone.conf
 fi
 
+READ THE REMOTES.TXT AND RUN REFRESH TOKEN
 while IFS= read -r i
 do
     echo --- "Refresh token for $i" ---
     check=$(./rclone about "$i": 2>&1)
     case "$check" in
-        "Total"*)
+        *"otal"*)
             echo "$check"
             ;;
-        "Failed to about: Google Photos path"*)
+        *"ailed to about: Google Photos path"*)
             ./rclone lsd "$i":album
             ;;
         "")
@@ -50,8 +52,9 @@ do
     esac
     echo ------
     echo
-done < <(grep -v '^ *#' < PUT_YOUR_REMOTES_HERE.txt)
+done < <(grep -v '^ *#' < REMOTES.txt)
 
+# CHECK IF THERE ARE ANY STEPS FAIL THEN EXIT 1
 if [[ $fail -ne 0 ]]; then
     echo "There is one or more remotes whose tokens couldn't be refreshed!!!"
     exit 1

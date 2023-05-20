@@ -5,7 +5,7 @@ on:
     branches: [ dev ]
   pull_request:
     paths:
-      - "PUT_YOUR_REMOTES_HERE.txt"
+      - "REMOTES.txt"
   workflow_dispatch:
   schedule:
    - cron: '0 */48 * * *'
@@ -50,25 +50,45 @@ jobs:
         rm -f rclone.conf
         wget -O rclone.conf ${{ env.RCLONE_CONFIG_FILE }} > /dev/null 2>&1
 
-    - name: Recreate PUT_YOUR_REMOTES_HERE.txt if it is in secret
+    - name: Recreate REMOTES.txt if it is in secret
       if: ${{ env.SECRET_REMOTES }}
       run: |
-        rm -f PUT_YOUR_REMOTES_HERE.txt
+        rm -f REMOTES.txt
         if [[ "${{ env.SECRET_REMOTES }}" == "https://"* ]]; then
-          wget -O PUT_YOUR_REMOTES_HERE.txt ${{ env.SECRET_REMOTES }} > /dev/null 2>&1
+          wget -O REMOTES.txt ${{ env.SECRET_REMOTES }} > /dev/null 2>&1
         else
-          echo "${{ env.SECRET_REMOTES }}" > PUT_YOUR_REMOTES_HERE.txt  > /dev/null 2>&1
+          echo "${{ env.SECRET_REMOTES }}" > REMOTES.txt  > /dev/null 2>&1
         fi
 
-    - name: Recreate PUT_YOUR_REMOTES_HERE.txt if it is in variable
+    - name: Recreate REMOTES.txt if it is in variable
       if: ${{ env.VAR_REMOTES }}
       run: |
-        rm -f PUT_YOUR_REMOTES_HERE.txt
+        rm -f REMOTES.txt
         if [[ "${{ env.VAR_REMOTES }}" == "https://"* ]]; then
-          wget -O PUT_YOUR_REMOTES_HERE.txt ${{ env.VAR_REMOTES }}
+          wget -O REMOTES.txt ${{ env.VAR_REMOTES }}
         else
-          echo "${{ env.VAR_REMOTES }}" > PUT_YOUR_REMOTES_HERE.txt
+          echo "${{ env.VAR_REMOTES }}" > REMOTES.txt
         fi
 
     - name: Refresh Token
+#      if: ${{ env.TELEGRAM_TOKEN != '' && env.TELEGRAM_TO != '' }} # Remove this hashtag if you want to exclude this step when TELEGRAM_TO and TELEGRAM_TOKEN are set. Default is always run this step.
       run: Scripts/Refresh_Token.sh
+
+    - name: Refresh Token and redirect output to refresh_token_log.txt
+      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO }}
+      run: |
+        # DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
+        rm -rf refresh_token_log.txt
+
+        # REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
+        exec > refresh_token_log.txt 2>&1
+
+        Scripts/Refresh_Token.sh
+
+    - name: Send log to Telegram
+      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO }}
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message_file: refresh_token_log.txt

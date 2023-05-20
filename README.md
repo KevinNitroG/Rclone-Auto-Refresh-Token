@@ -64,7 +64,7 @@ token = {...}
 Content format:
 </summary>
 
-```PUT_YOUR_REMOTES_HERE.txt
+```REMOTES.txt
 Gugu drai
 1Drai
 ...
@@ -77,8 +77,8 @@ Oops
 
 ### OPTION 1: Edit directly
 
-- Create a file name `PUT_YOUR_REMOTES_HERE.txt`
-- Enter the content in the file [`PUT_YOUR_REMOTES_HERE.txt`][PUT_YOUR_REMOTES_HERE.txt] you created in the previous step
+- Create a file name `REMOTES.txt`
+- Enter the content in the file [`REMOTES.txt`][REMOTES.txt] you created in the previous step
 
 ### OPTION 2: Use either Secret or Variable
 
@@ -86,15 +86,23 @@ Oops
 - **Name**: `REMOTES`<br>**Value**: Fill in either the content or raw link
 > If you fill in both, variable will rewrite secret
 
+## 4️⃣ SETUP SEND LOG TO TELEGRAM _(optional)_
+
+Create 2 secrets:
+- **Name**: `TELGRAM_TO`<br>**Value**: The id of your group or user
+- **Name**: `TELGRAM_TOKEN`<br>**Value**: Your bot token _(take it from [Bot Father](https://t.me/BotFather))_
+
+> **Note:** You need to setup both of those secrets to make it send log to telegram
+
 # RUN:
 
 The workflows will automatically run when you do either:
 - Run itself on schedule cron, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L11)
 - Trigger from action tab
 - Star/Restar the repo ⭐
-- Edit [`PUT_YOUR_REMOTES_HERE.txt`][PUT_YOUR_REMOTES_HERE.txt]
+- Edit [`REMOTES.txt`][REMOTES.txt]
 
 <!-- Foot Notes -->
 
 [rclone.conf]: rclone.conf
-[PUT_YOUR_REMOTES_HERE.txt]: PUT_YOUR_REMOTES_HERE.txt
+[REMOTES.txt]: REMOTES.txt

@@ -1,7 +1,8 @@
 rclone.conf
 rclone*
 rclone*/*
-PUT_YOUR_REMOTES_HERE.txt
+REMOTES.txt
 README.html
 README.txt
 git-log.txt
+refresh_token_log.txt
