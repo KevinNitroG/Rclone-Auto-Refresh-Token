@@ -77,7 +77,7 @@ jobs:
       run: Scripts/Refresh_Token.sh
 
     - name: Refresh Token and redirect output to refresh_token_log.txt
-      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO }}
+      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && always() }}
       run: |
         # DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
         rm -rf refresh_token_log.txt
@@ -91,7 +91,7 @@ jobs:
         Scripts/Refresh_Token.sh
 
     - name: Send log to Telegram
-      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO }}
+      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && always() }}
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
