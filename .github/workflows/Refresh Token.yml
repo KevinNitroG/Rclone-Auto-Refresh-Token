@@ -73,6 +73,7 @@ jobs:
         fi
 
     - name: Refresh Token
+      if: ${{ env.TELEGRAM_TOKEN == '' || env.TELEGRAM_TO == '' }}
       run: Scripts/Refresh_Token.sh
 
     - name: Refresh Token and redirect output to refresh_token_log.txt
@@ -80,14 +81,8 @@ jobs:
       run: |
         # DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
         rm -rf refresh_token_log.txt
-
-        # Title for refresh_token_log.txt
-        echo "--- Log of Rclone Auto Refresh Token ---" >> refresh_token_log.txt
-        echo >> refresh_token_log.txt
-
         # REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
         exec >> refresh_token_log.txt 2>&1
-
         Scripts/Refresh_Token.sh
 
     - name: Send log to Telegram
