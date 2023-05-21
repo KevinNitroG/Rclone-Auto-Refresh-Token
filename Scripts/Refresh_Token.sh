@@ -17,6 +17,10 @@ if [ ! -s "REMOTES.txt" ]; then
     done < rclone.conf
 fi
 
+# TITLE FOR REFRESH_TOKEN_LOG.TXT
+echo "--- Log of Rclone Auto Refresh Token ---" >> refresh_token_log.txt
+echo >> refresh_token_log.txt
+
 # READ THE REMOTES.TXT AND RUN REFRESH TOKEN
 while IFS= read -r i
 do
