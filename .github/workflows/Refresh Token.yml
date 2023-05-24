@@ -76,11 +76,11 @@ jobs:
       run: Scripts/Refresh_Token.sh
 
     - name: Print log out to Github Action log
-      if: ${{ env.PRINT_LOG == 'True' }}
+      if: ${{ env.PRINT_LOG == 'True' && always() }}
       run: cat refresh_token_log.txt
 
     - name: Send log to Telegram
-      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && always() && env.TELEGRAM == 'True' }}
+      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && env.TELEGRAM == 'True' && always() }}
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
