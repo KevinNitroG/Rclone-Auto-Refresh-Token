@@ -3,9 +3,6 @@ name: Refresh Token
 on:
   push:
     branches: [ dev ]
-  pull_request:
-    paths:
-      - "REMOTES.txt"
   workflow_dispatch:
   schedule:
    - cron: '0 */48 * * *'
@@ -15,6 +12,9 @@ on:
 permissions: write-all
 
 env:
+  PRINT_LOG: False # Print out the log to Github Action log (True/False)
+  TELEGRAM: False # Send log to telegram (True/False)
+
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_REPOSITORY: $GITHUB_REPOSITORY
   RCLONE_CONFIG_FILE: ${{ secrets.RCLONE_CONFIG_FILE }}
@@ -73,20 +73,14 @@ jobs:
         fi
 
     - name: Refresh Token
-      if: ${{ env.TELEGRAM_TOKEN == '' || env.TELEGRAM_TO == '' }}
       run: Scripts/Refresh_Token.sh
 
-    - name: Refresh Token and redirect output to refresh_token_log.txt
-      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && always() }}
-      run: |
-        # DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
-        rm -rf refresh_token_log.txt
-        # REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
-        exec >> refresh_token_log.txt 2>&1
-        Scripts/Refresh_Token.sh
+    - name: Print log out to Github Action log
+      if: ${{ env.PRINT_LOG == 'True' && always() }}
+      run: cat refresh_token_log.txt
 
     - name: Send log to Telegram
-      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && always() }}
+      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && env.TELEGRAM == 'True' && always() }}
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}

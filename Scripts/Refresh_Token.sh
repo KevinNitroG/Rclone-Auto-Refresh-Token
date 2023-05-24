@@ -4,6 +4,15 @@ sed -i -e 's/\s*$//' -e '/^$/d' -e 's/\r//g' REMOTES.txt
 IFS=$'\n'
 fail=0
 
+check_fail()
+{
+    # CHECK IF THERE ARE ANY STEPS FAIL THEN EXIT 1
+    if [[ $fail -ne 0 ]]; then
+        echo "There is one or more remotes whose tokens couldn't be refreshed!!!"
+        exit 1
+    fi
+}
+
 # IF REMOTES.TXT IS EMPTY, EXTRACT ALL REMOTES INTO REMOTES.TXT
 if [ ! -s "REMOTES.txt" ]; then
     while read line
@@ -20,6 +29,12 @@ fi
 # TITLE FOR REFRESH_TOKEN_LOG.TXT
 echo "--- Log of Rclone Auto Refresh Token ---" >> refresh_token_log.txt
 echo >> refresh_token_log.txt
+
+# DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
+rm -rf refresh_token_log.txt
+
+# REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
+exec >> refresh_token_log.txt 2>&1
 
 # READ THE REMOTES.TXT AND RUN REFRESH TOKEN
 while IFS= read -r i
@@ -65,8 +80,9 @@ do
     echo
 done < <(grep -v '^ *#' < REMOTES.txt)
 
-# CHECK IF THERE ARE ANY STEPS FAIL THEN EXIT 1
-if [[ $fail -ne 0 ]]; then
-    echo "There is one or more remotes whose tokens couldn't be refreshed!!!"
-    exit 1
-fi
+check_fail
+
+# Exit logging to refresh_token_log.txt
+exec 1>&- 2>&-
+
+check_fail

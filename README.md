@@ -86,13 +86,21 @@ Oops
 - **Name**: `REMOTES`<br>**Value**: Fill in either the content or raw link
 > If you fill in both, secret will rewrite variable
 
-## 4️⃣ SETUP SEND LOG TO TELEGRAM _(optional)_
+## 4️⃣ SET FEATURE ON / OFF _(optional)_
 
-Create 2 secrets:
-- **Name**: `TELGRAM_TO`<br>**Value**: The id of your group or user
-- **Name**: `TELGRAM_TOKEN`<br>**Value**: Your bot token _(take it from [Bot Father](https://t.me/BotFather))_
+Go to your [`Refresh Token.yml`][Refresh Token.yml] file and edit lines in `env:`
 
-> **Note:** You need to setup both of those secrets to make it send log to telegram
+| NAME OF VARIABLE 	| DESCRIPTION                                                                  	| HOW TO USE               	| DEFAULT VALUE 	|
+|------------------	|------------------------------------------------------------------------------	|--------------------------	|---------------	|
+| PRINT_LOG        	| After the running the script, it will print out the log to Github Action log 	| Set value in `.yml` file 	| `False`        	|
+| TELEGRAM         	| Send the log as message to your Telegram                                     	| Set value in `.yml` file 	| `False`       	|
+
+## 5️⃣ SETUP SEND LOG TO TELEGRAM _(optional)_
+
+- Ensure that you have set `TELEGRAM` in [`Refresh Token.yml`][Refresh Token.yml] to `True` to enable this
+- Create 2 secrets:
+  - **Name**: `TELGRAM_TO`<br>**Value**: The id of your group or user
+  - **Name**: `TELGRAM_TOKEN`<br>**Value**: Your bot token _(take it from [Bot Father](https://t.me/BotFather))_
 
 # RUN:
 
@@ -100,9 +108,9 @@ The workflows will automatically run when you do either:
 - Run itself on schedule cron, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L11)
 - Trigger from action tab
 - Star/Restar the repo ⭐
-- Edit [`REMOTES.txt`][REMOTES.txt]
 
 <!-- Foot Notes -->
 
 [rclone.conf]: rclone.conf
 [REMOTES.txt]: REMOTES.txt
+[Refresh Token.yml]: .github/workflows/Refresh%20Token.yml
