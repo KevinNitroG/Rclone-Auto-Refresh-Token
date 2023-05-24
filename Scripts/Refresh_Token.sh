@@ -4,6 +4,11 @@ sed -i -e 's/\s*$//' -e '/^$/d' -e 's/\r//g' REMOTES.txt
 IFS=$'\n'
 fail=0
 
+# DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
+rm -rf refresh_token_log.txt
+# REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
+exec >> refresh_token_log.txt 2>&1
+
 # IF REMOTES.TXT IS EMPTY, EXTRACT ALL REMOTES INTO REMOTES.TXT
 if [ ! -s "REMOTES.txt" ]; then
     while read line
