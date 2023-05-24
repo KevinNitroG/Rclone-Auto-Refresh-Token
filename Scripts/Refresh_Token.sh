@@ -13,12 +13,6 @@ check_fail()
     fi
 }
 
-# DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
-rm -rf refresh_token_log.txt
-
-# REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
-exec >> refresh_token_log.txt 2>&1
-
 # IF REMOTES.TXT IS EMPTY, EXTRACT ALL REMOTES INTO REMOTES.TXT
 if [ ! -s "REMOTES.txt" ]; then
     while read line
@@ -35,6 +29,12 @@ fi
 # TITLE FOR REFRESH_TOKEN_LOG.TXT
 echo "--- Log of Rclone Auto Refresh Token ---" >> refresh_token_log.txt
 echo >> refresh_token_log.txt
+
+# DELETE OLD REFRESH_TOKEN_LOG.TXT IF NEED
+rm -rf refresh_token_log.txt
+
+# REDIRECT THE LOG INTO REFRESH_TOKEN_LOG.TXT
+exec >> refresh_token_log.txt 2>&1
 
 # READ THE REMOTES.TXT AND RUN REFRESH TOKEN
 while IFS= read -r i
