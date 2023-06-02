@@ -89,6 +89,7 @@ cat logs_folder/*.txt >> refresh_token_log.txt
 # CHECK FAIL
 if [ -s failed_remote_indexes.txt ]; then
     echo "There is one or more remotes whose tokens couldn't be refreshed!!!"
+    echo "If it failed because unsupported remote, then create an issue in https://github.com/KevinNitroG/Rclone-Auto-Refresh-Token/issues"
     echo "Here is the list of failed remotes"
     echo
     while read -r i
