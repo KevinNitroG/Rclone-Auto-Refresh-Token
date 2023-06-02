@@ -3,9 +3,7 @@
 # SETUP BEFORE SCRIPT
 sed -i -e 's/\s*$//' -e '/^$/d' -e 's/\r//g' REMOTES.txt
 IFS=$'\n'
-fail=0
 number_of_remotes=0
-failed_remote=()
 rm -rf refresh_token_log.txt failed_remote_indexes.txt
 rm -rf logs_folder
 mkdir logs_folder
@@ -94,7 +92,7 @@ if [ -s failed_remote_indexes.txt ]; then
     echo
     while read -r i
     do
-        cat logs_folder/refresh_token_log_$i.txt
+        cat "logs_folder/refresh_token_log_$i.txt"
     done < <(grep -v '^ *#' < failed_remote_indexes.txt)
     exit 1
 else
