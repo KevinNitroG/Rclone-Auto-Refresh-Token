@@ -31,7 +31,7 @@ while IFS= read -r i
 do
     (( number_of_remotes+=1 ))
     (
-        exec >> logs_folder/refresh_token_log_$number_of_remotes.txt 2>&1
+        exec >> logs_folder/refresh_token_log_"$number_of_remotes".txt 2>&1
         echo --------- "$i" ---------
         check=$(./rclone about "$i": 2>&1)
         case "$check" in
