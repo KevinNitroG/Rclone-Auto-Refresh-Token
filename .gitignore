@@ -6,3 +6,5 @@ README.html
 README.txt
 git-log.txt
 refresh_token_log.txt
+logs_folder
+failed_remote_indexes.txt
