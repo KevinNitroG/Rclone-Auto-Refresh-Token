@@ -12,8 +12,8 @@ on:
 permissions: write-all
 
 env:
-  PRINT_LOG: False # Print out the log to Github Action log (True/False)
-  TELEGRAM: False # Send log to telegram (True/False)
+  PRINT_LOG: True # Print out the log to Github Action log (True/False)
+  TELEGRAM: True # Send log to telegram (True/False)
 
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_REPOSITORY: $GITHUB_REPOSITORY
@@ -26,6 +26,10 @@ jobs:
   Refresh_Token:
     runs-on: ubuntu-latest
     continue-on-error: true
+
+    outputs:
+      TELEGRAM: ${{ env.TELEGRAM }}
+      PRINT_LOG: ${{ env.PRINT_LOG }}
 
     steps:
     - name: Checkout code
@@ -73,25 +77,53 @@ jobs:
     - name: Refresh Token
       run: Scripts/Refresh_Token.sh
 
-    - name: Print log out to Github Action log
-      if: ${{ env.PRINT_LOG == 'True' && always() }}
-      run: cat refresh_token_log.txt
+    - name: Check if it needs to do sth with log
+      id: check
+      continue-on-error: true
+      run: |
+        if [[ ${{ env.PRINT_LOG }} == 'True' || ${{ env.TELEGRAM }} == 'True' ]]
+        do
+          echo "USE_ARTIFACT=True" >> $GITHUB_ENV
+        done
 
     - name: Upload artifact
-      if: ${{ env.TELEGRAM == 'True' && always() }}
+      if: ${{ env.USEARTIFACT == 'True' }}
       uses: actions/upload-artifact@main
       with:
         name: refresh_token_log
         path: refresh_token_log.txt
 
   Send_log_to_Telegram:
-    if: ${{ env.TELEGRAM == 'True' }}
+    runs-on: ubuntu-latest
+    if: ${{ needs.Refresh_Token.outputs.TELEGRAM == 'True' }}
     needs: Refresh_Token
-    uses: "./.github/workflows/Send log to Telegram.yml"
+    steps:
+
+    - name: Download artifact
+      uses: actions/download-artifact@main
+      with:
+        name: refresh_token_log
+        path: refresh_token_log.txt
+
+    - name : Send log
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message_file: refresh_token_log.txt
+        disable_notification: true
+
+  Print_log_out_to_github_output:
+    runs-on: ubuntu-latest
+    if: ${{ needs.Refresh_Token.outputs.PRINT_LOG == 'True' }}
+    needs: Refresh_Token
+    steps:
+    - name: Print log out to Github Action log
+      run: cat refresh_token_log.txt
 
   Delete_artifact:
     runs-on: ubuntu-latest
-    needs: [ Refresh_Token, Send_log_to_Telegram ]
+    needs: [ Send_log_to_Telegram,Print_log_out_to_github_output ]
     steps:
     - name: Delete artifact
       uses: geekyeggo/delete-artifact@main
