@@ -21,13 +21,11 @@ env:
   SECRET_REMOTES: ${{ secrets.REMOTES }}
   VAR_REMOTES: ${{ vars.REMOTES }}
   WORKSPACE: ${{ github.WORKSPACE }}
-  TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
-  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
 jobs:
   Refresh_Token:
     runs-on: ubuntu-latest
-#    timeout-minutes: 5
+    continue-on-error: true
 
     steps:
     - name: Checkout code
@@ -79,11 +77,23 @@ jobs:
       if: ${{ env.PRINT_LOG == 'True' && always() }}
       run: cat refresh_token_log.txt
 
-    - name: Send log to Telegram
-      if: ${{ env.TELEGRAM_TOKEN && env.TELEGRAM_TO && env.TELEGRAM == 'True' && always() }}
-      uses: appleboy/telegram-action@master
+    - name: Upload artifact
+      if: ${{ env.TELEGRAM == 'True' && always() }}
+      uses: actions/upload-artifact@main
       with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message_file: refresh_token_log.txt
-        disable_notification: true
+        name: refresh_token_log
+        path: refresh_token_log.txt
+
+  Send_log_to_Telegram:
+    if: ${{ env.TELEGRAM == 'True' }}
+    needs: Refresh_Token
+    uses: "./.github/workflows/Send log to Telegram.yml"
+
+  Delete_artifact:
+    runs-on: ubuntu-latest
+    needs: [ Refresh_Token, Send_log_to_Telegram ]
+    steps:
+    - name: Delete artifact
+      uses: geekyeggo/delete-artifact@main
+      with:
+          name: refresh_token_log
