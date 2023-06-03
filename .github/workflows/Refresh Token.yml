@@ -12,8 +12,8 @@ on:
 permissions: write-all
 
 env:
-  PRINT_LOG: True # Print out the log to Github Action log (True/False)
-  TELEGRAM: True # Send log to telegram (True/False)
+  PRINT_LOG: true # Print out the log to Github Action log (true/false)
+  TELEGRAM: true # Send log to telegram (true/false)
 
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_REPOSITORY: $GITHUB_REPOSITORY
@@ -82,11 +82,11 @@ jobs:
       continue-on-error: true
       run: |
         if [[ "${{ env.PRINT_LOG }}" == "true" || "${{ env.TELEGRAM }}" == "true" ]]; then
-          echo "USE_ARTIFACT=True" >> $GITHUB_ENV
+          echo "USE_ARTIFACT=true" >> $GITHUB_ENV
         fi
 
     - name: Upload artifact
-      if: ${{ env.USEARTIFACT == 'True' }}
+      if: ${{ env.USEARTIFACT == 'true' }}
       uses: actions/upload-artifact@main
       with:
         name: refresh_token_log
@@ -94,7 +94,7 @@ jobs:
 
   Send_log_to_Telegram:
     runs-on: ubuntu-latest
-    if: ${{ needs.Refresh_Token.outputs.TELEGRAM == 'True' }}
+    if: ${{ needs.Refresh_Token.outputs.TELEGRAM == 'true' }}
     needs: Refresh_Token
     steps:
 
@@ -114,7 +114,7 @@ jobs:
 
   Print_log_out_to_github_output:
     runs-on: ubuntu-latest
-    if: ${{ needs.Refresh_Token.outputs.PRINT_LOG == 'True' }}
+    if: ${{ needs.Refresh_Token.outputs.PRINT_LOG == 'true' }}
     needs: Refresh_Token
     steps:
     - name: Print log out to Github Action log
