@@ -81,10 +81,9 @@ jobs:
       id: check
       continue-on-error: true
       run: |
-        if [[ "${{ env.PRINT_LOG }}" == "True" || "${{ env.TELEGRAM }}" == "True" ]]
-        do
+        if [[ "${{ env.PRINT_LOG }}" == "true" || "${{ env.TELEGRAM }}" == "true" ]]; then
           echo "USE_ARTIFACT=True" >> $GITHUB_ENV
-        done
+        fi
 
     - name: Upload artifact
       if: ${{ env.USEARTIFACT == 'True' }}
