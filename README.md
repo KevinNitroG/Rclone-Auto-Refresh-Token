@@ -1,4 +1,4 @@
-# ✨ RCLONE AUTO REFRESH TOKEN ✨
+# ✨ RCLONE AUTO REFRESH TOKEN ✨ ![Refresh Token Status](https://github.com/KevinNitroG/Rclone-Auto-Refresh-Token/actions/workflows/Refresh%20Token.yml/badge.svg?branch=main)
 
 - This repo will help to check your remotes' storage / list album of GGPhotos to refresh the tokens
 - When you don't use your remote for a time, its token is expired itself
