@@ -81,7 +81,7 @@ jobs:
       id: check
       continue-on-error: true
       run: |
-        if [[ ${{ env.PRINT_LOG }} == 'True' || ${{ env.TELEGRAM }} == 'True' ]]
+        if [[ "${{ env.PRINT_LOG }}" == "True" || "${{ env.TELEGRAM }}" == "True" ]]
         do
           echo "USE_ARTIFACT=True" >> $GITHUB_ENV
         done
