@@ -58,7 +58,7 @@ jobs:
       if: ${{ env.VAR_REMOTES }}
       run: |
         rm -f REMOTES.txt
-        if [[ "${{ env.VAR_REMOTES }}" == "https://"* ]]; then
+        if [[ "${{ env.VAR_REMOTES }}" == "http"* ]]; then
           wget -O REMOTES.txt ${{ env.VAR_REMOTES }}
         else
           echo "${{ env.VAR_REMOTES }}" > REMOTES.txt
@@ -68,7 +68,7 @@ jobs:
       if: ${{ env.SECRET_REMOTES }}
       run: |
         rm -f REMOTES.txt
-        if [[ "${{ env.SECRET_REMOTES }}" == "https://"* ]]; then
+        if [[ "${{ env.SECRET_REMOTES }}" == "http"* ]]; then
           wget -O REMOTES.txt ${{ env.SECRET_REMOTES }} > /dev/null 2>&1
         else
           echo "${{ env.SECRET_REMOTES }}" > REMOTES.txt  > /dev/null 2>&1
