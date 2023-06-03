@@ -102,7 +102,6 @@ jobs:
       uses: actions/download-artifact@main
       with:
         name: refresh_token_log
-        path: refresh_token_log.txt
 
     - name : Send log
       uses: appleboy/telegram-action@master
@@ -117,6 +116,12 @@ jobs:
     if: ${{ needs.Refresh_Token.outputs.PRINT_LOG == 'true' }}
     needs: Refresh_Token
     steps:
+
+    - name: Download artifact
+      uses: actions/download-artifact@main
+      with:
+        name: refresh_token_log
+
     - name: Print log out to Github Action log
       run: cat refresh_token_log.txt
 
