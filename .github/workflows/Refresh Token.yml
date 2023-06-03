@@ -86,7 +86,7 @@ jobs:
         fi
 
     - name: Upload artifact
-      if: ${{ env.USEARTIFACT == 'true' }}
+      if: ${{ env.USE_ARTIFACT == 'true' }}
       uses: actions/upload-artifact@main
       with:
         name: refresh_token_log
