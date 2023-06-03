@@ -92,8 +92,8 @@ Go to your [`Refresh Token.yml`][Refresh Token.yml] file and edit lines in `env:
 
 | NAME OF VARIABLE 	| DESCRIPTION                                                                  	| HOW TO USE               	| DEFAULT VALUE 	|
 |------------------	|------------------------------------------------------------------------------	|--------------------------	|---------------	|
-| PRINT_LOG        	| After the running the script, it will print out the log to Github Action log 	| Set value in `.yml` file 	| `False`        	|
-| TELEGRAM         	| Send the log as message to your Telegram                                     	| Set value in `.yml` file 	| `False`       	|
+| PRINT_LOG        	| After the running the script, it will print out the log to Github Action log 	| Set value in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L15) file 	| `false`        	|
+| TELEGRAM         	| Send the log as message to your Telegram                                     	| Set value in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L16) file 	| `false`       	|
 
 ## 5️⃣ SETUP SEND LOG TO TELEGRAM _(optional)_
 

@@ -12,8 +12,8 @@ on:
 permissions: write-all
 
 env:
-  PRINT_LOG: true # Print out the log to Github Action log (true/false)
-  TELEGRAM: true # Send log to telegram (true/false)
+  PRINT_LOG: false # Print out the log to Github Action log (true/false)
+  TELEGRAM: false # Send log to telegram (true/false)
 
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_REPOSITORY: $GITHUB_REPOSITORY
