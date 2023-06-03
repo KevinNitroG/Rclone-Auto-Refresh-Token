@@ -1,4 +1,4 @@
-# ✨ RCLONE AUTO REFRESH TOKEN ✨
+# ✨ RCLONE AUTO REFRESH TOKEN ✨ [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/KevinNitroG/Rclone-Auto-Refresh-Token/main.svg)](https://results.pre-commit.ci/latest/github/KevinNitroG/Rclone-Auto-Refresh-Token/main)
 
 - This repo will help to check your remotes' storage / list album of GGPhotos to refresh the tokens
 - When you don't use your remote for a time, its token is expired itself
