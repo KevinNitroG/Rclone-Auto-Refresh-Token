@@ -106,10 +106,10 @@ Go to your [`Refresh Token.yml`][Refresh Token.yml] file and edit lines in `env:
 
 # RUN:
 
-The workflows will automatically run when you do either:
+The workflow will automatically run when you do either:
 
-- Run itself on schedule cron, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L11)
-- Trigger from action tab
+- Run itself on cron schedule, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh%20Token.yml#L8)
+- Trigger from action tab _(workflow dispatch)_
 - Star/Restar the repo ⭐
 
 <!-- Foot Notes -->
