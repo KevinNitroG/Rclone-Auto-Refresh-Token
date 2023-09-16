@@ -4,7 +4,7 @@
 -   When you don't use your remote for a time, its token is expired itself
 -   This repo keeps your remotes' tokens alive, not to be expired
 -   Automatically run using Github Action on Cron Schedule
-    > Default: Runs at 00:00 GMT
+    > Default: Runs at 00:00, every 4 days of the week
 
 ---
 
@@ -12,7 +12,6 @@
 
 -   [✨ RCLONE AUTO REFRESH TOKEN ](#-rclone-auto-refresh-token-)
 -   [TABLE OF CONTENTS](#table-of-contents)
--   [📝 NOTES](#-notes)
 -   [📃 HOW TO USE](#-how-to-use)
     -   [1️⃣ HAVE YOUR OWN REPO](#1️⃣-have-your-own-repo)
     -   [2️⃣ CREATE RCLONE.CONF](#2️⃣-create-rcloneconf)
@@ -24,19 +23,7 @@
     -   [4️⃣ SET FEATURE ON / OFF _(optional)_](#4️⃣-set-feature-on--off-optional)
     -   [5️⃣ SETUP SEND LOG TO TELEGRAM _(optional)_](#5️⃣-setup-send-log-to-telegram-optional)
 -   [🏃‍♂️ RUN](#️-run)
-
----
-
-# 📝 NOTES
-
--   The old workflows runs will be deleted after 10080 minutes _(7 days)_
-    > Run by [`Delete old workflows runs.yml`](.github/workflows/Delete%20old%20workflows%20runs.yml)
--   This repo will cache the Rclone, save up time to setup Rclone
-    > If you face any error or want to update newer Rclone version, delete the old cache `cache-rclone` in Actions tab → Management → Caches
--   I've just tested `GoogleDrive`, `OneDrive`, `Mega`, `Dropbox`, `GGPhotos`. Others I haven't tested yet.
--   Not support `Shared Google Drive` and `Combine`
--   If you face any error, create an issue and type in the full log of the failed step
-    > Don't forget to censore your personal information in the log
+-   [📝 NOTES](#-notes)
 
 ---
 
@@ -136,6 +123,17 @@ The workflow will automatically run when you do either:
 -   Run itself on cron schedule, you can edit it in [`Refresh Token.yml`](.github/workflows/Refresh_Token.yml#L8)
 -   Trigger from action tab _(workflow dispatch)_
 -   Star/Restar the repo ⭐
+
+---
+
+# 📝 NOTES
+
+-   See [`Delete old workflows runs.yml`](.github/workflows/Delete%20old%20workflows%20runs.yml) to auto delete workflow runs
+-   This repo will cache the Rclone, save up time to setup Rclone
+    > If you face any error or want to update newer Rclone version, delete the old cache `cache-rclone` in Actions tab → Management → Caches
+-   I've just tested `GoogleDrive`, `OneDrive`, `Mega`, `Dropbox`, `GGPhotos`. Others I haven't tested yet.
+-   Not support `Shared Google Drive` and `Combine`
+-   If you face any error, create an issue and type in the full log of the failed step > Don't forget to censore your personal information in the log
 
 <!-- Foot Notes -->
 
